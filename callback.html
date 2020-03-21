@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Callback</title>
+  </head>
+  <body>
+    OK
+    <script>
+      const value = window.location.hash.substring(1);
+      const searchParams = new URLSearchParams(value);
+      if (searchParams.has("access_token")) {
+        const accessToken = searchParams.get("access_token");
+        console.log(accessToken);
+      }
+    </script>
+  </body>
+</html>

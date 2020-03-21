@@ -1,0 +1,82 @@
+<!--
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nano streaming</title>
+    <style>
+      
+      body {
+        padding: 0;
+        margin: 0;
+        background-color: black;
+      }
+      h3 {
+        color: white;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+      }
+
+      .item {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item">
+        <h3>180p</h3>
+        <video controls="controls" preload="metadata" style="width: 100%">
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-180p.mp4/playlist.m3u8" type="application/x-mpegurl"></source>
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-180p.mp4" type="video/mp4"></source>
+        </video>
+      </div>
+
+      <div class="item">
+        <h3>480p</h3>
+        <video controls="controls" preload="metadata" style="width: 100%">
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-480p.mp4/playlist.m3u8" type="application/x-mpegurl"></source>
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-480p.mp4" type="video/mp4"></source>
+        </video>
+      </div>
+
+      <div class="item">
+        <h3>720p</h3>
+        <video controls="controls" preload="metadata" style="width: 100%">
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-720p.mp4/playlist.m3u8" type="application/x-mpegurl"></source>
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-720p.mp4" type="video/mp4"></source>
+        </video>
+      </div>
+
+      <div class="item">
+        <h3>1080p</h3>
+        <video controls="controls" preload="metadata" style="width: 100%">
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-1080p.mp4/playlist.m3u8" type="application/x-mpegurl"></source>
+          <source src="http://178.128.100.249:8081/vod/BigBuckBunny-1080p.mp4" type="video/mp4"></source>
+        </video>
+      </div>
+
+      <div class="item">
+        <button onclick="playVideo()" type="button">Play</button>
+        <button onclick="pauseVideo()" type="button">Pause</button>
+      </div>
+    </div>
+    <script>
+      function playVideo() {
+        const elements = document.getElementsByTagName("video");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].play()
+        }
+       }
+      function pauseVideo() {
+        const elements = document.getElementsByTagName("video");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].pause()
+        }
+       }
+    </script>
+  </body>
+</html>
+-->
