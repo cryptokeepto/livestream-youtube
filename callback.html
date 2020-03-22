@@ -19,11 +19,12 @@
       }
       if (searchParams.has("access_token")) {
         const accessToken = searchParams.get("access_token");
+        const date = new Date();
+        const tomorrow = date.setDate(date.getDate() + 1);
+
         // save accessToken in cookie
         document.cookie = `accessToken=${accessToken}; expires=${new Date(
-          2020,
-          2,
-          31
+          tomorrow
         ).toUTCString()};`;
       }
     </script>
