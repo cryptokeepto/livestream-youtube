@@ -4,9 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Classwin live stream</title>
-    <script src="./js/app.js"></script>
   </head>
   <body>
-    <button onclick="login()">Login</button>
+    <h1>Classwin live</h1>
+    <script>
+      function getCookie(name) {
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
+        if (parts.length !== 2)
+          return new Error({ error: "getCookie function length is not 2" });
+        return parts.pop();
+      }
+
+      function deleteCookie(name) {}
+
+      function hasCookie(name) {
+        const cookie = document.cookie;
+        return cookie.includes("accessToken");
+      }
+
+      // Check accessToken is exist in stroage cookie ?
+      const isHas = hasCookie("accessToken");
+      if (!isHas) {
+        window.location.pathname = "/login.html";
+      } else {
+        const value = getCookie("accessToken");
+        console.log(value);
+      }
+    </script>
   </body>
 </html>

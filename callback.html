@@ -6,7 +6,8 @@
     <title>Callback</title>
   </head>
   <body>
-    OK
+    <h1>Callback</h1>
+    <a href="http://cryptokeepto.com/index.html">go back</a>
     <script>
       // get accessToken
       const value = window.location.hash.substring(1);
@@ -19,8 +20,11 @@
       if (searchParams.has("access_token")) {
         const accessToken = searchParams.get("access_token");
         // save accessToken in cookie
-        document.cookie = `accessToken=${accessToken}`;
-        console.log(document.cookie);
+        document.cookie = `accessToken=${accessToken}; expires=${new Date(
+          2020,
+          2,
+          31
+        ).toUTCString()};`;
       }
     </script>
   </body>
