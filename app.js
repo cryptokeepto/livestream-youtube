@@ -35,17 +35,39 @@ function refreshAccessToken(accessToken) {
     .then(res => res.json())
     .then(data => {
       // new accessToken
-      const accessToken = data.access_token;
+      const newAccessToken = data.access_token;
       const date = new Date();
       const tomorrow = date.setDate(date.getDate() + 1);
       // save accessToken in cookie
-      document.cookie = `accessToken=${accessToken}; expires=${new Date(
+      document.cookie = `accessToken=${newAccessToken}; expires=${new Date(
         tomorrow
       ).toUTCString()};`;
     })
     .catch(error => {
       throw error;
     });
+}
+
+function list(broadcastStatus) {
+  const apiKey = "AIzaSyAwjwbrnOy6vPu-nju-ogaeb37xtxRy0r0";
+  const accessToken = getCookie("accessToken");
+  fetch(
+    `https://www.googleapis.com/youtube/v3/liveBroadcasts?part=id%2Csnippet%2CcontentDetails%2Cstatus&broadcastStatus=${broadcastStatus}&broadcastType=all&key=${apiKey}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }
+  )
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => {
+      throw error;
+    });
+}
+
+function create() {
+  console.log("create");
 }
 
 // Check accessToken is exist in stroage cookie ?

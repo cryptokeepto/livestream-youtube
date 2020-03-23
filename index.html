@@ -3,11 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
     <title>Classwin live stream</title>
   </head>
   <body>
     <h1>Classwin live</h1>
-    <code>console.log()</code>
+    <hr />
+    <section>
+      <h3>List</h3>
+      <button onclick="list('upcoming')">list upcoming</button>
+      <button onclick="list('active')">list active</button>
+      <button onclick="list('completed')">list completed</button>
+    </section>
+    <section>
+      <h3>Create</h3>
+      <button onclick="create()">create boardcast</button>
+    </section>
     <script src="./app.js"></script>
   </body>
 </html>
