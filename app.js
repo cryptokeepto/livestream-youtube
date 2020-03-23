@@ -10,7 +10,7 @@ function deleteCookie(name) {}
 
 function hasCookie(name) {
   const cookie = document.cookie;
-  return cookie.includes("accessToken");
+  return cookie.includes(name) && getCookie(name) !== undefined;
 }
 
 function isAccessTokenExpired(accessToken) {
@@ -55,7 +55,8 @@ function list(broadcastStatus) {
     `https://www.googleapis.com/youtube/v3/liveBroadcasts?part=id%2Csnippet%2CcontentDetails%2Cstatus&broadcastStatus=${broadcastStatus}&broadcastType=all&key=${apiKey}`,
     {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json"
       }
     }
   )
@@ -67,6 +68,9 @@ function list(broadcastStatus) {
 }
 
 function create() {
+  fetch(`https://www.googleapis.com/youtube/v3/liveBroadcasts`, {
+    method: "POST"
+  });
   console.log("create");
 }
 
