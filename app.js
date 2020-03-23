@@ -122,7 +122,25 @@ function create() {
   )
     .then(res => res.json())
     .then(data => {
-      console.log(data);
+      const { id } = data;
+      const element = document.getElementById("videoLive");
+      const h3 = document.createElement("h3");
+      h3.innerText = "Learner";
+      const iframe = document.createElement("iframe");
+      iframe.setAttribute("width", "400");
+      iframe.setAttribute("height", "345");
+      iframe.setAttribute(
+        "src",
+        `https://www.youtube.com/embed/${id}?autoplay=1&livemonitor=1`
+      );
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute(
+        "allow",
+        "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      );
+      iframe.setAttribute("allowfullscreen", "true");
+      element.appendChild(h3);
+      element.appendChild(iframe);
     })
     .catch(error => {
       throw error;
