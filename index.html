@@ -17,8 +17,79 @@
     </section>
     <section>
       <h3>Create</h3>
-      <button onclick="create()">create boardcast</button>
+      <form>
+        <div>
+          <label for="title">Title:</label>
+          <br />
+          <input id="title" name="title" type="text" value="" />
+        </div>
+        <div>
+          <label for="description">Description:</label>
+          <br />
+          <textarea
+            name="description"
+            id="description"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <label for="privacyStatus">Privacy:</label>
+        <br />
+        <select name="privacyStatus" id="privacyStatus">
+          <option value="public">Public ทุกคนสามารถเห็นได้</option>
+          <option value="private">Private คุณเท่านั้นสามารถเห็นได้</option>
+          <option value="unlisted"
+            >Unpublic ทุกคนที่มี link สามารถเห็นได้</option
+          >
+        </select>
+        <div>
+          <label for="scheduledStartTime">ScheduledStartTime:</label>
+          <br />
+          <input
+            type="datetime-local"
+            name="scheduledStartTime"
+            id="scheduledStartTime"
+          />
+        </div>
+        <div>
+          <label for="scheduledEndTime">ScheduledEndTime:</label>
+          <br />
+          <input
+            type="datetime-local"
+            name="scheduledEndTime"
+            id="scheduledEndTime"
+          />
+        </div>
+        <!-- <div>
+          <label for="actualStartTime">ActualStartTime:</label>
+          <br />
+          <input
+            type="datetime-local"
+            name="actualStartTime"
+            id="actualStartTime"
+          />
+        </div>
+        <div>
+          <label for="actualEndTime">ActualEndTime:</label>
+          <br />
+          <input
+            type="datetime-local"
+            name="actualEndTime"
+            id="actualEndTime"
+          />
+        </div> -->
+        <br />
+        <button type="button" onclick="create()">create boardcast</button>
+      </form>
     </section>
+    <!-- <iframe
+      width="425"
+      height="344"
+      src="https://www.youtube.com/embed/M3tmNWGBI38?autoplay=1&livemonitor=1"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe> -->
     <script src="./app.js"></script>
   </body>
 </html>

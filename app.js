@@ -68,10 +68,65 @@ function list(broadcastStatus) {
 }
 
 function create() {
-  fetch(`https://www.googleapis.com/youtube/v3/liveBroadcasts`, {
-    method: "POST"
-  });
-  console.log("create");
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const scheduledStartTime =
+    document.getElementById("scheduledStartTime").value + ":00Z";
+  const scheduledEndTime =
+    document.getElementById("scheduledEndTime").value + ":00Z";
+  // const actualStartTime =
+  //   document.getElementById("actualStartTime").value + ":00Z";
+  // const actualEndTime = document.getElementById("actualEndTime").value + ":00Z";
+
+  const privacyStatus = document.getElementById("privacyStatus").value;
+  const accessToken = getCookie("accessToken");
+  fetch(
+    `https://www.googleapis.com/youtube/v3/liveBroadcasts?part=id%2Csnippet%2CcontentDetails%2Cstatus`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        snippet: {
+          title,
+          description,
+          scheduledStartTime: new Date(scheduledStartTime).toISOString(),
+          scheduledEndTime: new Date(scheduledEndTime).toISOString()
+          // actualStartTime: new Date(actualStartTime).toISOString(),
+          // actualEndTime: new Date(actualEndTime).toISOString()
+          // thumbnails: {
+          //   default: {
+          //     height: 0,
+          //     url: "",
+          //     width: 0
+          //   },
+          //   high: {
+          //     height: 0,
+          //     url: "",
+          //     width: 0
+          //   },
+          //   medium: {
+          //     height: 0,
+          //     url: "",
+          //     width: 0
+          //   },
+        },
+        status: {
+          privacyStatus
+        }
+      })
+    }
+  )
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      throw error;
+    });
 }
 
 // Check accessToken is exist in stroage cookie ?
