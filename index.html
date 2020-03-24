@@ -16,9 +16,9 @@
           <hr />
           <section>
             <h3>List</h3>
-            <button onclick="list('upcoming')">list upcoming</button>
-            <button onclick="list('active')">list active</button>
-            <button onclick="list('completed')">list completed</button>
+            <button onclick="listBroadCast('upcoming')">list upcoming</button>
+            <button onclick="listBroadCast('active')">list active</button>
+            <button onclick="listBroadCast('completed')">list completed</button>
           </section>
           <section>
             <h3>Create</h3>
@@ -101,6 +101,14 @@
         <section class="container">
           <h1>2. Stream</h1>
           <hr />
+          <section>
+            <h3>List</h3>
+            <button onclick="listStream('all')">list all</button>
+            <br />
+            <br />
+            <input type="text" name="streamId" id="streamId" />
+            <button onclick="listStream('byId')">list by id</button>
+          </section>
           <section>
             <h3>Create</h3>
             <div>

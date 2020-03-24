@@ -48,7 +48,7 @@ function refreshAccessToken(accessToken) {
     });
 }
 
-function list(broadcastStatus) {
+function listBroadCast(broadcastStatus) {
   const apiKey = "AIzaSyAwjwbrnOy6vPu-nju-ogaeb37xtxRy0r0";
   const accessToken = getCookie("accessToken");
   fetch(
@@ -65,6 +65,45 @@ function list(broadcastStatus) {
     .catch(error => {
       throw error;
     });
+}
+
+function listStream(type) {
+  const apiKey = "AIzaSyAwjwbrnOy6vPu-nju-ogaeb37xtxRy0r0";
+  const accessToken = getCookie("accessToken");
+  const url = `https://www.googleapis.com/youtube/v3/liveStreams?part=id%2Csnippet%2Ccdn%2CcontentDetails%2Cstatus&key=${apiKey}`;
+  if (type === "byId") {
+    const streamId = document.getElementById("streamId").value;
+    if (streamId.length <= 0) return alert("Require");
+    fetch(`${url}&id=${streamId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        throw error;
+      });
+  } else {
+    fetch(`${url}&mine=true`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        throw error;
+      });
+  }
 }
 
 function createStream() {
