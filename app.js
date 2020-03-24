@@ -67,84 +67,143 @@ function list(broadcastStatus) {
     });
 }
 
-function create() {
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
+function createStream() {
+  const apiKey = "AIzaSyAwjwbrnOy6vPu-nju-ogaeb37xtxRy0r0";
+  const title = document.getElementById("titleStream").value;
+  const description = document.getElementById("descriptionStream").value;
+  const resolution = document.getElementById("resolutionStream").value;
+  const frameRate = document.getElementById("frameRateStream").value;
+
+  const accessToken = getCookie("accessToken");
+  return new Promise((resolve, reject) => {
+    fetch(
+      `https://www.googleapis.com/youtube/v3/liveStreams?part=id%2Csnippet%2Ccdn%2CcontentDetails%2Cstatus&key=${apiKey}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          snippet: {
+            title,
+            description
+          },
+          cdn: {
+            frameRate,
+            ingestionType: "rtmp",
+            resolution
+          },
+          contentDetails: {
+            isReusable: true
+          }
+        })
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        return resolve("stream is created");
+      })
+      .catch(error => {
+        return reject(error);
+      });
+  });
+}
+
+function createBroadcast() {
+  const apiKey = "AIzaSyAwjwbrnOy6vPu-nju-ogaeb37xtxRy0r0";
+  const title = document.getElementById("titleBroadcast").value;
+  const description = document.getElementById("descriptionBroadcast").value;
   const scheduledStartTime =
-    document.getElementById("scheduledStartTime").value + ":00Z";
+    document.getElementById("scheduledStartTimeBroadcast").value + ":00Z";
   const scheduledEndTime =
-    document.getElementById("scheduledEndTime").value + ":00Z";
+    document.getElementById("scheduledEndTimeBroadcast").value + ":00Z";
   // const actualStartTime =
   //   document.getElementById("actualStartTime").value + ":00Z";
   // const actualEndTime = document.getElementById("actualEndTime").value + ":00Z";
 
-  const privacyStatus = document.getElementById("privacyStatus").value;
+  const privacyStatus = document.getElementById("privacyStatusBroadcast").value;
   const accessToken = getCookie("accessToken");
-  fetch(
-    `https://www.googleapis.com/youtube/v3/liveBroadcasts?part=id%2Csnippet%2CcontentDetails%2Cstatus`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        snippet: {
-          title,
-          description,
-          scheduledStartTime: new Date(scheduledStartTime).toISOString(),
-          scheduledEndTime: new Date(scheduledEndTime).toISOString()
-          // actualStartTime: new Date(actualStartTime).toISOString(),
-          // actualEndTime: new Date(actualEndTime).toISOString()
-          // thumbnails: {
-          //   default: {
-          //     height: 0,
-          //     url: "",
-          //     width: 0
-          //   },
-          //   high: {
-          //     height: 0,
-          //     url: "",
-          //     width: 0
-          //   },
-          //   medium: {
-          //     height: 0,
-          //     url: "",
-          //     width: 0
-          //   },
+  return new Promise((resolve, reject) => {
+    fetch(
+      `https://www.googleapis.com/youtube/v3/liveBroadcasts?part=id%2Csnippet%2CcontentDetails%2Cstatus&key=${apiKey}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
-        status: {
-          privacyStatus
-        }
+        body: JSON.stringify({
+          snippet: {
+            title,
+            description,
+            scheduledStartTime: new Date(scheduledStartTime).toISOString(),
+            scheduledEndTime: new Date(scheduledEndTime).toISOString()
+            // actualStartTime: new Date(actualStartTime).toISOString(),
+            // actualEndTime: new Date(actualEndTime).toISOString()
+            // thumbnails: {
+            //   default: {
+            //     height: 0,
+            //     url: "",
+            //     width: 0
+            //   },
+            //   high: {
+            //     height: 0,
+            //     url: "",
+            //     width: 0
+            //   },
+            //   medium: {
+            //     height: 0,
+            //     url: "",
+            //     width: 0
+            //   },
+          },
+          status: {
+            privacyStatus
+          }
+        })
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        const { id } = data;
+        const element = document.getElementById("videoLive");
+        const h3 = document.createElement("h3");
+        h3.innerText = "Learner";
+        const iframe = document.createElement("iframe");
+        iframe.setAttribute("width", "400");
+        iframe.setAttribute("height", "345");
+        iframe.setAttribute(
+          "src",
+          `https://www.youtube.com/embed/${id}?autoplay=1&livemonitor=1`
+        );
+        iframe.setAttribute("frameborder", "0");
+        iframe.setAttribute(
+          "allow",
+          "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        );
+        iframe.setAttribute("allowfullscreen", "true");
+        element.appendChild(h3);
+        element.appendChild(iframe);
+        return resolve("boradcast is created");
       })
-    }
-  )
-    .then(res => res.json())
-    .then(data => {
-      const { id } = data;
-      const element = document.getElementById("videoLive");
-      const h3 = document.createElement("h3");
-      h3.innerText = "Learner";
-      const iframe = document.createElement("iframe");
-      iframe.setAttribute("width", "400");
-      iframe.setAttribute("height", "345");
-      iframe.setAttribute(
-        "src",
-        `https://www.youtube.com/embed/${id}?autoplay=1&livemonitor=1`
-      );
-      iframe.setAttribute("frameborder", "0");
-      iframe.setAttribute(
-        "allow",
-        "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      );
-      iframe.setAttribute("allowfullscreen", "true");
-      element.appendChild(h3);
-      element.appendChild(iframe);
-    })
-    .catch(error => {
-      throw error;
-    });
+      .catch(error => {
+        return reject(error);
+      });
+  });
+}
+
+async function create() {
+  try {
+    // const boradcast = await createBroadcast();
+    const stream = await createStream();
+    console.log(boradcast);
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 // Check accessToken is exist in stroage cookie ?
