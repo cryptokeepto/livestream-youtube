@@ -7,136 +7,152 @@
     <title>Classwin live stream</title>
   </head>
   <body>
-    <!-- boradcast -->
-    <section class="container">
-      <h1>Broadcast</h1>
-      <hr />
-      <section>
-        <h3>List</h3>
-        <button onclick="list('upcoming')">list upcoming</button>
-        <button onclick="list('active')">list active</button>
-        <button onclick="list('completed')">list completed</button>
-      </section>
-      <section>
-        <h3>Create</h3>
-        <form>
-          <div>
-            <label for="titleBroadcast">Title:</label>
-            <br />
-            <input
-              id="titleBroadcast"
-              name="titleBroadcast"
-              type="text"
-              value=""
-            />
-          </div>
-          <div>
-            <label for="descriptionBroadcast">Description:</label>
-            <br />
-            <textarea
-              name="descriptionBroadcast"
-              id="descriptionBroadcast"
-              cols="30"
-              rows="10"
-            ></textarea>
-          </div>
-          <label for="privacyStatusBroadcast">Privacy:</label>
-          <br />
-          <select name="privacyStatusBroadcast" id="privacyStatusBroadcast">
-            <option value="public">Public ทุกคนสามารถเห็นได้</option>
-            <option value="private">Private คุณเท่านั้นสามารถเห็นได้</option>
-            <option value="unlisted"
-              >Unpublic ทุกคนที่มี link สามารถเห็นได้</option
-            >
-          </select>
-          <div>
-            <label for="scheduledStartTimeBroadcast">ScheduledStartTime:</label>
-            <br />
-            <input
-              type="datetime-local"
-              name="scheduledStartTimeBroadcast"
-              id="scheduledStartTimeBroadcast"
-            />
-          </div>
-          <div>
-            <label for="scheduledEndTimeBroadcast">ScheduledEndTime:</label>
-            <br />
-            <input
-              type="datetime-local"
-              name="scheduledEndTimeBroadcast"
-              id="scheduledEndTimeBroadcast"
-            />
-          </div>
-          <!-- <div>
-            <label for="actualStartTime">ActualStartTime:</label>
-            <br />
-            <input
-              type="datetime-local"
-              name="actualStartTime"
-              id="actualStartTime"
-            />
-          </div>
-          <div>
-            <label for="actualEndTime">ActualEndTime:</label>
-            <br />
-            <input
-              type="datetime-local"
-              name="actualEndTime"
-              id="actualEndTime"
-            />
-          </div> -->
-        </form>
-      </section>
-      <section id="videoLive"></section>
-    </section>
-    <br />
-    <br />
-    <!-- stream -->
-    <section class="container">
-      <h1>Stream</h1>
-      <hr />
-      <section>
-        <h3>Create</h3>
-        <div>
-          <label for="titleStream">Title:</label>
-          <br />
-          <input type="text" name="titleStream" id="titleStream" />
+    <div class="wrapper">
+      <div>
+        <h1 class="header">Instructor</h1>
+        <!-- boradcast -->
+        <section class="container">
+          <h1>1. Broadcast</h1>
+          <hr />
+          <section>
+            <h3>List</h3>
+            <button onclick="list('upcoming')">list upcoming</button>
+            <button onclick="list('active')">list active</button>
+            <button onclick="list('completed')">list completed</button>
+          </section>
+          <section>
+            <h3>Create</h3>
+            <form>
+              <div>
+                <label for="titleBroadcast">Title:</label>
+                <br />
+                <input
+                  id="titleBroadcast"
+                  name="titleBroadcast"
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div>
+                <label for="descriptionBroadcast">Description:</label>
+                <br />
+                <textarea
+                  name="descriptionBroadcast"
+                  id="descriptionBroadcast"
+                  cols="30"
+                  rows="10"
+                ></textarea>
+              </div>
+              <label for="privacyStatusBroadcast">Privacy:</label>
+              <br />
+              <select name="privacyStatusBroadcast" id="privacyStatusBroadcast">
+                <option value="public">Public ทุกคนสามารถเห็นได้</option>
+                <option value="private"
+                  >Private คุณเท่านั้นสามารถเห็นได้</option
+                >
+                <option value="unlisted"
+                  >Unpublic ทุกคนที่มี link สามารถเห็นได้</option
+                >
+              </select>
+              <div>
+                <label for="scheduledStartTimeBroadcast"
+                  >ScheduledStartTime:</label
+                >
+                <br />
+                <input
+                  type="datetime-local"
+                  name="scheduledStartTimeBroadcast"
+                  id="scheduledStartTimeBroadcast"
+                />
+              </div>
+              <div>
+                <label for="scheduledEndTimeBroadcast">ScheduledEndTime:</label>
+                <br />
+                <input
+                  type="datetime-local"
+                  name="scheduledEndTimeBroadcast"
+                  id="scheduledEndTimeBroadcast"
+                />
+              </div>
+              <!-- <div>
+                <label for="actualStartTime">ActualStartTime:</label>
+                <br />
+                <input
+                  type="datetime-local"
+                  name="actualStartTime"
+                  id="actualStartTime"
+                />
+              </div>
+              <div>
+                <label for="actualEndTime">ActualEndTime:</label>
+                <br />
+                <input
+                  type="datetime-local"
+                  name="actualEndTime"
+                  id="actualEndTime"
+                />
+              </div> -->
+            </form>
+          </section>
+        </section>
+        <br />
+        <br />
+        <!-- stream -->
+        <section class="container">
+          <h1>2. Stream</h1>
+          <hr />
+          <section>
+            <h3>Create</h3>
+            <div>
+              <label for="titleStream">Title:</label>
+              <br />
+              <input type="text" name="titleStream" id="titleStream" />
+            </div>
+            <div>
+              <label for="descriptionStream">Description:</label>
+              <br />
+              <textarea
+                name="descriptionStream"
+                id="descriptionStream"
+                cols="30"
+                rows="10"
+              ></textarea>
+            </div>
+            <div>
+              <label for="resolutionStream">Resolution:</label>
+              <br />
+              <select name="resolutionStream" id="resolutionStream">
+                <option value="variable">auto</option>
+                <option value="480p">480p</option>
+                <option value="720p">720p</option>
+                <option value="1080p">1080p</option>
+                <option value="1440p">1440p</option>
+                <option value="2160p">2160p</option>
+              </select>
+            </div>
+            <div>
+              <label for="frameRateStream">FrameRate:</label>
+              <br />
+              <select name="frameRateStream" id="frameRateStream">
+                <option value="variable">auto</option>
+                <option value="30fps">30fps</option>
+                <option value="60fps">60fps</option>
+              </select>
+            </div>
+          </section>
+        </section>
+        <br />
+        <div id="info" class="info"></div>
+        <br />
+        <button type="button" onclick="create()">create</button>
+      </div>
+      <div>
+        <h1 class="header">Learner</h1>
+        <div class="container">
+          <section id="videoLive"></section>
         </div>
-        <div>
-          <label for="descriptionStream">Description:</label>
-          <br />
-          <textarea
-            name="descriptionStream"
-            id="descriptionStream"
-            cols="30"
-            rows="10"
-          ></textarea>
-        </div>
-        <div>
-          <label for="resolutionStream">Resolution:</label>
-          <br />
-          <select name="resolutionStream" id="resolutionStream">
-            <option value="variable">auto</option>
-            <option value="480p">480p</option>
-            <option value="720p">720p</option>
-            <option value="1080p">1080p</option>
-            <option value="1440p">1440p</option>
-            <option value="2160p">2160p</option>
-          </select>
-        </div>
-        <div>
-          <label for="frameRateStream">FrameRate:</label>
-          <br />
-          <select name="frameRateStream" id="frameRateStream">
-            <option value="variable">auto</option>
-            <option value="30fps">30fps</option>
-            <option value="60fps">60fps</option>
-          </select>
-        </div>
-      </section>
-    </section>
-    <br />
-    <button type="button" onclick="create()">create</button>
+      </div>
+    </div>
 
     <script src="./app.js"></script>
   </body>

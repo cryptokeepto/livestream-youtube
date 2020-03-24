@@ -3,3 +3,20 @@
   border-radius: 10px;
   padding: 10px;
 }
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 10px;
+}
+
+.header {
+  text-align: center;
+}
+
+.info {
+  background-color: #d2d2d2;
+  padding: 10px;
+  color: green;
+  border-radius: 3px;
+}

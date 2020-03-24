@@ -103,8 +103,7 @@ function createStream() {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        return resolve("stream is created");
+        return resolve(data);
       })
       .catch(error => {
         return reject(error);
@@ -169,26 +168,7 @@ function createBroadcast() {
     )
       .then(res => res.json())
       .then(data => {
-        const { id } = data;
-        const element = document.getElementById("videoLive");
-        const h3 = document.createElement("h3");
-        h3.innerText = "Learner";
-        const iframe = document.createElement("iframe");
-        iframe.setAttribute("width", "400");
-        iframe.setAttribute("height", "345");
-        iframe.setAttribute(
-          "src",
-          `https://www.youtube.com/embed/${id}?autoplay=1&livemonitor=1`
-        );
-        iframe.setAttribute("frameborder", "0");
-        iframe.setAttribute(
-          "allow",
-          "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        );
-        iframe.setAttribute("allowfullscreen", "true");
-        element.appendChild(h3);
-        element.appendChild(iframe);
-        return resolve("boradcast is created");
+        return resolve(data);
       })
       .catch(error => {
         return reject(error);
@@ -196,11 +176,64 @@ function createBroadcast() {
   });
 }
 
+function bindBroadcastToStream(broadcastId, streamId) {
+  const apiKey = "AIzaSyAwjwbrnOy6vPu-nju-ogaeb37xtxRy0r0";
+  const accessToken = getCookie("accessToken");
+  return new Promise((resolve, reject) => {
+    fetch(
+      `https://www.googleapis.com/youtube/v3/liveBroadcasts/bind?id=${broadcastId}&part=id%2C%20snippet%2C%20contentDetails%2C%20status&streamId=${streamId}&key=${apiKey}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json"
+        }
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        resolve(data);
+      })
+      .catch(error => {
+        return reject(error);
+      });
+  });
+}
+
+function renderToHTML(liveStreamId, stream) {
+  const videoLiveEle = document.getElementById("videoLive");
+  const infoEle = document.getElementById("info");
+  const p1 = document.createElement("p");
+  const p2 = document.createElement("p");
+  const iframe = document.createElement("iframe");
+
+  p1.innerText = `streamKey: ${stream.streamName}`;
+  p2.innerText = `address: ${stream.ingestionAddress}`;
+  iframe.setAttribute("width", "100%");
+  iframe.setAttribute("height", "345");
+  iframe.setAttribute(
+    "src",
+    `https://www.youtube.com/embed/${liveStreamId}?autoplay=1&livemonitor=1`
+  );
+  iframe.setAttribute("frameborder", "0");
+  iframe.setAttribute(
+    "allow",
+    "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  );
+  iframe.setAttribute("allowfullscreen", "true");
+  videoLiveEle.appendChild(iframe);
+  infoEle.appendChild(p1);
+  infoEle.appendChild(p2);
+}
+
 async function create() {
   try {
-    // const boradcast = await createBroadcast();
+    const boradcast = await createBroadcast();
     const stream = await createStream();
-    console.log(boradcast);
+    const infoLiveStream = await bindBroadcastToStream(boradcast.id, stream.id);
+    renderToHTML(infoLiveStream.id, stream.cdn.ingestionInfo);
+    console.log("stream", stream.cdn.ingestionInfo);
+    console.log("infoLiveStream", infoLiveStream);
   } catch (error) {
     throw new Error(error);
   }
