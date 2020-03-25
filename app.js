@@ -1,3 +1,16 @@
+// Check accessToken is exist in stroage cookie ?
+const isHas = hasCookie("accessToken");
+if (!isHas) {
+  window.location.pathname = "/login.html";
+} else {
+  const accessToken = getCookie("accessToken");
+  isAccessTokenExpired(accessToken)
+    .then(isExpired => {
+      if (isExpired) refreshAccessToken(accessToken);
+    })
+    .catch(error => console.error(error));
+}
+
 function getCookie(name) {
   const value = "; " + document.cookie;
   const parts = value.split("; " + name + "=");
@@ -239,8 +252,8 @@ function bindBroadcastToStream(broadcastId, streamId) {
   });
 }
 
-function renderToHTML(liveStreamId, stream) {
-  const videoLiveEle = document.getElementById("videoLive");
+function learnerRenderToHTML(broadcastId, stream) {
+  const videoEle = document.getElementById("videoLearner");
   const infoEle = document.getElementById("info");
   const p1 = document.createElement("p");
   const p2 = document.createElement("p");
@@ -252,7 +265,7 @@ function renderToHTML(liveStreamId, stream) {
   iframe.setAttribute("height", "345");
   iframe.setAttribute(
     "src",
-    `https://www.youtube.com/embed/${liveStreamId}?autoplay=1&livemonitor=1`
+    `https://www.youtube.com/embed/${broadcastId}?autoplay=1&livemonitor=1`
   );
   iframe.setAttribute("frameborder", "0");
   iframe.setAttribute(
@@ -260,33 +273,68 @@ function renderToHTML(liveStreamId, stream) {
     "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
   );
   iframe.setAttribute("allowfullscreen", "true");
-  videoLiveEle.appendChild(iframe);
+  videoEle.appendChild(iframe);
   infoEle.appendChild(p1);
   infoEle.appendChild(p2);
 }
 
 async function create() {
   try {
-    const boradcast = await createBroadcast();
+    const broadcast = await createBroadcast();
     const stream = await createStream();
-    const infoLiveStream = await bindBroadcastToStream(boradcast.id, stream.id);
-    renderToHTML(infoLiveStream.id, stream.cdn.ingestionInfo);
+    const infoLiveStream = await bindBroadcastToStream(broadcast.id, stream.id);
+    learnerRenderToHTML(infoLiveStream.id, stream.cdn.ingestionInfo);
     console.log("stream", stream.cdn.ingestionInfo);
     console.log("infoLiveStream", infoLiveStream);
+    // keep broadcastId in store browser
+    window.broadcastId = infoLiveStream.id;
   } catch (error) {
     throw new Error(error);
   }
 }
 
-// Check accessToken is exist in stroage cookie ?
-const isHas = hasCookie("accessToken");
-if (!isHas) {
-  window.location.pathname = "/login.html";
-} else {
+function instructorRenderToHTML(broadcastId) {
+  const videoEle = document.getElementById("videoInstructor");
+  const iframe = document.createElement("iframe");
+  iframe.setAttribute("width", "100%");
+  iframe.setAttribute("height", "345");
+  iframe.setAttribute(
+    "src",
+    `https://www.youtube.com/embed/${broadcastId}?autoplay=1&livemonitor=1`
+  );
+  iframe.setAttribute("frameborder", "0");
+  iframe.setAttribute(
+    "allow",
+    "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  );
+  iframe.setAttribute("allowfullscreen", "true");
+  videoEle.appendChild(iframe);
+}
+
+function transition(status) {
+  const apiKey = "AIzaSyAwjwbrnOy6vPu-nju-ogaeb37xtxRy0r0";
   const accessToken = getCookie("accessToken");
-  isAccessTokenExpired(accessToken)
-    .then(isExpired => {
-      if (isExpired) refreshAccessToken(accessToken);
+  const { broadcastId } = window;
+  if (!broadcastId) throw new Error("Require `broadcastId`");
+  fetch(
+    `https://www.googleapis.com/youtube/v3/liveBroadcasts/transition?broadcastStatus=${status}&id=${broadcastId}&part=id%2C%20snippet%2C%20contentDetails%2C%20status&key=${apiKey}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json"
+      }
+    }
+  )
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      return data.id;
     })
-    .catch(error => console.error(error));
+    .then(broadcastId => {
+      instructorRenderToHTML(broadcastId);
+    })
+    .catch(error => {
+      throw error;
+    });
 }

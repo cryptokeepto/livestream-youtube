@@ -153,12 +153,23 @@
         <button type="button" onclick="create()">create</button>
         <br />
         <br />
-        <div id="info" class="info"></div>
+        <section class="container">
+          <div id="info" class="info"></div>
+          <button onclick="transition('testing')">Testing</button>
+          <button onclick="transition('live')">Live</button>
+          <button onclick="transition('complete')">Complete</button>
+        </section>
+        <br />
+        <!-- preview -->
+        <section class="container">
+          <h3>Preview Video</h3>
+          <section id="videoInstructor"></section>
+        </section>
       </div>
       <div>
         <h1 class="header">Learner</h1>
         <div class="container">
-          <section id="videoLive"></section>
+          <section id="videoLearner"></section>
         </div>
       </div>
     </div>
